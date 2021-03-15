@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:setupapp/pages/home.dart';
-import 'package:setupapp/setup/signup.dart';
+import 'package:setupapp/setup/login.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Signup extends StatefulWidget {
+  Signup({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _SignupState createState() => new _SignupState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SignupState extends State<Signup> {
   final formKey = GlobalKey<FormState>();
   String _email, _password;
   final auth = FirebaseAuth.instance;
@@ -20,8 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: Center(child: new Text('Log in')),
-          backgroundColor: Colors.orange,
+          title: Center(child: new Text('create account')),
         ),
         body: Card(
           child: Padding(
@@ -64,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPressed: () {
                             return _submit();
                           },
-                          child: Text('Log in'),
-                          color: Colors.blue,
+                          child: Text('Register'),
+                          color: Colors.green,
                         ),
                       ),
                       Padding(
@@ -74,11 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Signup()),
+                              MaterialPageRoute(builder: (context) => MyHomePage()),
                             );
                           },
-                          child: Text('Register'),
-                          color: Colors.green,
+                          child: Text('Log in'),
+                          color: Colors.blue,
                         ),
                       )
                     ],
@@ -90,10 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  void _submit() async {
+  Future<void> _submit()  async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      final FirebaseUser user = (await auth.signInWithEmailAndPassword(
+      final FirebaseUser user = (await auth.createUserWithEmailAndPassword(
               email: _email, password: _password))
           .user;
       // read = auth.signInWithEmailAndPassword(email: _email, password: _password);
