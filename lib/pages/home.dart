@@ -14,16 +14,18 @@ class Home extends StatelessWidget {
         child: RaisedButton(
           color: Colors.red,
           child: Text('Log out'),
-          onPressed: () async {
-            await auth.signOut();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => MyHomePage(),
-                ));
-          },
+          onPressed: ()=> _logout(context),
         ),
       ),
     );
+  }
+
+  void _logout(context) async {
+    await auth.signOut();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => MyHomePage(),
+        ));
   }
 }
